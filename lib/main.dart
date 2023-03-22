@@ -40,7 +40,7 @@ void callAvatarHandler(id) {
 }
 
 void main() async {
-  // Expose a Dart function to JavaScript
+  // Expose a Dart function to JavaScript!
   allowInterops(context);
 
   WidgetsFlutterBinding.ensureInitialized();
