@@ -35,7 +35,7 @@ class _CKGameWidgetState extends ConsumerState<CKGameWidget> {
         .collection('project/${widget.projectId}/code')
         .snapshots()
         .listen((codes) => codes.docs.forEach((e) {
-              // print(e.data());
+              print(e.data());
               registerEvent(e.data()['handler'],
                   "try { \n ${e.data()['code']} \n } catch (e) { \n logError('${e.data()['handler']}', e); \n }");
             }));
@@ -52,11 +52,15 @@ class _CKGameWidgetState extends ConsumerState<CKGameWidget> {
             onKey: (event) {
               // print('keyLabel: ${event.logicalKey.keyLabel}');
               if (event is RawKeyDownEvent) {
-                js.context.callMethod(
-                    event.logicalKey.keyLabel.toLowerCase() + '_key_down');
+                if (js.context.hasProperty(
+                    event.logicalKey.keyLabel.toLowerCase() + '_key_down'))
+                  js.context.callMethod(
+                      event.logicalKey.keyLabel.toLowerCase() + '_key_down');
               } else if (event is RawKeyUpEvent) {
-                js.context.callMethod(
-                    event.logicalKey.keyLabel.toLowerCase() + '_key_up');
+                if (js.context.hasProperty(
+                    event.logicalKey.keyLabel.toLowerCase() + '_key_up'))
+                  js.context.callMethod(
+                      event.logicalKey.keyLabel.toLowerCase() + '_key_up');
               }
               // else if (event.isKeyPressed(LogicalKeyboardKey.space)) {
               //   js.context.callMethod('space_key_pressed');
